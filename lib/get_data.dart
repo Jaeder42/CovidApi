@@ -34,7 +34,7 @@ dynamic filterData(dynamic data) {
       'cases': result['cases'],
       'deaths': result['deaths'],
       'totalDeaths': result['totaldeaths'],
-      'totaCases': result['totalcases']
+      'totalCases': result['totalcases']
     };
   });
 
