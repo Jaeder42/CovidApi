@@ -1,13 +1,21 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart';
 
+dynamic poormansRedis = null;
+
 Future<String> getData() async {
-  var results = await get(
-      'https://opendata.ecdc.europa.eu/covid19/casedistribution/json/');
-  var json = jsonDecode(results.body);
-  var data = filterData(json);
-  return (jsonEncode(data));
+  if (poormansRedis == null) {
+    var results = await get(
+        'https://opendata.ecdc.europa.eu/covid19/casedistribution/json/');
+    var json = jsonDecode(results.body);
+    var data = filterData(json);
+    return (jsonEncode(data));
+  } else {
+    print('Returning "cache"');
+    return await jsonEncode(poormansRedis);
+  }
 }
 
 dynamic filterData(dynamic data) {
@@ -33,6 +41,10 @@ dynamic filterData(dynamic data) {
     'totalCases': getTotal(results, dataSet: 'cases'),
     'totalDeaths': getTotal(results, dataSet: 'deaths')
   };
+  poormansRedis = result;
+  Timer(Duration(hours: 1), () {
+    poormansRedis = null;
+  });
   return result;
 }
 
