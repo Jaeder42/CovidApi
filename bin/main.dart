@@ -17,6 +17,9 @@ void main(List<String> arguments) async {
       print(requestedPath);
       if (requestedPath.contains('list')) {
         var result = await getData();
+        request.response.headers.add('Access-Control-Allow-Origin', '*');
+        request.response.headers
+            .add('Access-Control-Allow-Methods', 'POST,GET,DELETE,PUT,OPTIONS');
         request.response.headers.contentType =
             ContentType('application', 'json', charset: 'utf-8');
         request.response.write(result);
