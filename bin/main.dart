@@ -13,7 +13,7 @@ void main() async {
       .addMiddleware(shelf.logRequests())
       .addHandler(_echoRequest);
 
-  var server = await io.serve(handler, 'localhost', PORT);
+  var server = await io.serve(handler, '0.0.0.0', PORT);
 
   // Enable content compression
   server.autoCompress = true;
