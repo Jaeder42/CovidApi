@@ -26,13 +26,15 @@ dynamic filterData(dynamic data) {
   var reversed = results.reversed.toList();
   var index = 0;
   var withTotals = reversed.map((result) {
-    result['totalDeaths'] = getTotalToday(reversed, index);
+    result['totaldeaths'] = getTotalToday(reversed, index, dataSet: 'deaths');
+    result['totalcases'] = getTotalToday(reversed, index, dataSet: 'cases');
     index++;
     return {
       'date': result['dateRep'],
       'cases': result['cases'],
       'deaths': result['deaths'],
-      'totalDeaths': result['totalDeaths']
+      'totalDeaths': result['totaldeaths'],
+      'totaCases': result['totalcases']
     };
   });
 
@@ -48,11 +50,11 @@ dynamic filterData(dynamic data) {
   return result;
 }
 
-int getTotalToday(List<dynamic> data, index) {
+int getTotalToday(List<dynamic> data, int index, {String dataSet}) {
   if (index == 0) {
     return 0;
   } else {
-    return data[index - 1]['totalDeaths'] + int.parse(data[index]['deaths']);
+    return data[index - 1]['total$dataSet'] + int.parse(data[index][dataSet]);
   }
 }
 
