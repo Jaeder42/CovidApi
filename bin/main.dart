@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:api/get_data.dart';
 
 void main(List<String> arguments) async {
+  var envVars = Platform.environment;
+  var PORT = int.parse(envVars['PORT']);
   // #docregion bind
-  var server = await HttpServer.bind(
-    InternetAddress.loopbackIPv4,
-    4040,
-  );
+  var server = await HttpServer.bind(InternetAddress.loopbackIPv4, PORT);
   // #enddocregion bind
   print('Listening on localhost:${server.port}');
 
